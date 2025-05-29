@@ -1,1 +1,1 @@
-# Projetb de gestion des inscriptions scolaires
+# Projet de gestion des inscriptions scolaires
