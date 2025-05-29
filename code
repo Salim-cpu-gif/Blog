@@ -1,0 +1,48 @@
+<?php​
+// 1. UTILISATION DE REDIS​
+$redis = new Redis();​
+$redis->connect('127.0.0.1', 6379);​
+$redis->set('cached_key', 'Hello from Redis!', 3600); // Stockage avec expiration de 1 heure​
+echo "Redis: " . $redis->get('cached_key') . "\n";​
+// 2. UTILISATION DE MEMCACHED​
+$memcached = new Memcached();​
+$memcached->addServer('127.0.0.1', 11211);​
+$memcached->set('cached_key', 'Hello from Memcached!', 3600);​
+echo "Memcached: " . $memcached->get('cached_key') . "\n";​
+// 3. OPCACHE ACTIVÉ (Voir php.ini)​
+// Vérifiez que l'opcache est actif​
+if (function_exists('opcache_get_status')) {​
+    $status = opcache_get_status();​
+    echo "Opcache activé : " . ($status['opcache_enabled'] ? "Oui" : "Non") . "\n";}​
+// 4. REQUÊTES SQL OPTIMISÉES​
+try {$pdo = new PDO('mysql:host=127.0.0.1;dbname=test_db', 'root', '');​
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);​
+    // Analyse de la requête avec EXPLAIN​
+    $query = "SELECT * FROM users WHERE age > 30";​
+    $explain = $pdo->query("EXPLAIN $query")->fetchAll(PDO::FETCH_ASSOC);​
+    echo "EXPLAIN Résultat : \n";​
+    print_r($explain);​
+     // Requête optimisée avec index​
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_age ON users(age)");​
+    $optimizedQuery = "SELECT name, age FROM users WHERE age > 30 LIMIT 10";​
+    $result = $pdo->query($optimizedQuery)->fetchAll(PDO::FETCH_ASSOC);​
+    echo "Résultats optimisés : \n";​
+    print_r($result);​
+} catch (PDOException $e) {​
+    echo "Erreur SQL : " . $e->getMessage() . "\n";}​
+// 5. PROFILAGE AVEC XDEBUG​
+if (function_exists('xdebug_start_trace')) {​
+    xdebug_start_trace('/tmp/xdebug-trace'); // Démarre le traçage}​
+function heavyComputation($n) {​
+    $total = 0;​
+    for ($i = 0; $i < $n; $i++) {​
+        $total += sqrt($i); // Simule une charge}​
+    return $total;}​
+echo "Résultat de calcul intensif : " . heavyComputation(100000) . "\n";​
+if (function_exists('xdebug_stop_trace')) {​
+    xdebug_stop_trace(); // Arrête le traçage​
+    echo "Trace Xdebug créée dans /tmp/xdebug-trace.\n";}​
+// 6. PROFILAGE AVEC BLACKFIRE (CLI)​
+// À exécuter manuellement dans le terminal :​
+// blackfire run php performance-optimization.php​
+?>
