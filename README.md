@@ -33,3 +33,21 @@ Chaque utilisateur se connecte avec ses identifiants selon son rôle :
 ---
 
 ## 📂 Structure du projet
+   (Pésentation)
+
+   ---
+
+## 🧑‍💻 Auteurs
+
+- **Salim Boubacar**
+- **Issaka Barhamou Ouzairou**
+- **Mohamed Matmit**
+
+Projet réalisé dans le cadre d'un projet Java avec interface graphique (Java Swing).
+
+---
+
+## 📄 Licence
+
+Ce projet est distribué sous la [licence MIT](LICENSE).  
+Vous êtes libre de l'utiliser, le modifier et le redistribuer avec mention des auteurs.
