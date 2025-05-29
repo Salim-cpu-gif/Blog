@@ -1,0 +1,10 @@
+.class
+.log
+.idea/
+out/
+*.iml
+.DS_Store
+build/
+nbproject/private/
+dist/
+
